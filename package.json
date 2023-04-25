@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@types/eris-sharder": "^1.10.1",
+    "@types/node": "^18.16.0",
+    "@types/ws": "^8.5.4",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^16.0.3",
+    "eris": "^0.17.2",
+    "eris-sharder": "^1.10.0"
+  }
+}
