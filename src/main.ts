@@ -14,9 +14,10 @@ bot.on("messageCreate", (msg: Message) => {
     }
 });
 
-bot.on("voiceChannelJoin", (_member: Member, server: Guild) => {
+bot.on("voiceChannelJoin", (member: Member, server: Guild) => {
+    console.log(member);
     let VcChannel: string = server.id
-    bot.createMessage(VcChannel, "Waiting to ping... (1 Minute)")
+    bot.createMessage(VcChannel, `Waiting 1 minute to ping. <@${member.id}>`)
     setTimeout(() => {
         bot.createMessage(VcChannel, "A call has started! <@&1091919355262025781>")
     }, 60000);
