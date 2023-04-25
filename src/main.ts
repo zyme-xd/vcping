@@ -8,10 +8,10 @@ bot.on("ready", () => {
     console.log("Ready!");
 });
 
-
 bot.on("voiceChannelJoin", (member: Member, vc: VoiceChannel) => {
     let usersInVc = Array.from(vc.voiceMembers.values()).length // converts iterable to array, then gets value of length
     let VcChannel: string = vc.id;
+    console.log(`${member.id} has joined the channel ${vc.id}`)
     // designed to prevent double pings
     if (usersInVc > 1) {
         console.log("Timer has not started, as one is already ongoing for this channel.")
