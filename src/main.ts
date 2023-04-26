@@ -1,4 +1,4 @@
-import Eris, { Member, VoiceChannel } from "eris";
+import Eris, { Member, VoiceChannel } from "eris";  
 import * as dotenv from 'dotenv'
 dotenv.config()
 let token: string = process.env.TOKEN
