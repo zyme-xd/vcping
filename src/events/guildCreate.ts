@@ -5,7 +5,7 @@ import * as path from "path";
 
 // create default function
 export default (_client: Client, guild: Guild) => {
-  console.log(guild.id)
+  console.log(guild.id);
   const dataFilePath = path.join(__dirname, "..", "data.json");
 
   // Check if the data file exists
