@@ -26,12 +26,12 @@ bot.once("ready", async () => {
   console.log(`[Discord] Logged into ${bot.user.username}#${bot.user.discriminator}`);
   const slashCommands = await bot.getCommands();
 
-  // Register any unregistered commands
+  // register any unregistered commands
   commandlist.forEach(async (_value, key) => {
-    // If the command is not found in the list of registered commands, register it
+    // if the command is not found in the list of registered commands, register it
     if (!slashCommands.find((_) => _.name == key)) {
       console.log(`[Discord] Registering ${key}`);
-      // Get the command info from the commandlist and register the command
+      // get the command info from the commandlist and register the command
       const cmd = commandlist.get(key);
       await bot.createCommand(cmd.info);
     }
