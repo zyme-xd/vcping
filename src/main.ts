@@ -19,16 +19,11 @@ for (let file of fs.readdirSync(`${__dirname}/events`)) {
   // if file does not have .js extension, skip over it
   if (!file.endsWith(".js")) continue;
   // set bot event listener based on filename and bind default function to event
-  bot.on(
-    file.split(".")[0],
-    require(`${__dirname}/events/${file}`).default.bind(null, bot)
-  );
+  bot.on(file.split(".")[0], require(`${__dirname}/events/${file}`).default.bind(null, bot));
 }
 
 bot.once("ready", async () => {
-  console.log(
-    `[Discord] Logged into ${bot.user.username}#${bot.user.discriminator}`
-  );
+  console.log(`[Discord] Logged into ${bot.user.username}#${bot.user.discriminator}`);
   const slashCommands = await bot.getCommands();
 
   // Register any unregistered commands
