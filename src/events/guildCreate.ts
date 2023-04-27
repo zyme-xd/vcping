@@ -6,10 +6,10 @@ import * as path from "path";
 // create default function
 export default (_client: Client, guild: Guild) => {
   console.log(guild.id);
-  const dataFilePath = path.join(__dirname, "..", "data.json");
+  const dataFilePath: string = path.join(__dirname, "..", "data.json");
 
   // check if the data file exists
-  const fileExists = fs.existsSync(dataFilePath);
+  const fileExists: boolean = fs.existsSync(dataFilePath);
 
   // if the file does not exist, create it
   if (!fileExists) {
@@ -24,7 +24,7 @@ export default (_client: Client, guild: Guild) => {
   }
   // parse the contents of the data file into a JSON object
   const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
-  
+
   // create an empty server object for this guild and add it to the data object
   const serverObj: ServerObj = {};
   data[guild.id] = serverObj;
