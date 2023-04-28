@@ -8,10 +8,11 @@ export const info = {
 };
 
 export async function run(_client: Client, interaction: CommandInteraction): Promise<void> {
-    const isAdmin = interaction.member?.permissions.has("administrator");
-    if (!isAdmin) {
-      await interaction.createMessage("You do not have permission to run this command!!");
-      return
-    }
-    await interaction.createMessage("Unimplemented.");
+  await interaction.acknowledge(64);
+  const isAdmin = interaction.member?.permissions.has("administrator");
+  if (!isAdmin) {
+    await interaction.createFollowup("You do not have permission to run this command!!");
+    return;
+  }
+  await interaction.createFollowup("Unimplemented.");
 }

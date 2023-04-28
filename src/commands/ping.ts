@@ -8,5 +8,6 @@ export const info = {
 };
 
 export async function run(_client: Client, interaction: CommandInteraction): Promise<void> {
-  await interaction.createMessage("Pong!");
+  await interaction.acknowledge(64);
+  await interaction.createFollowup("Pong!");
 }
