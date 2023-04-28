@@ -15,7 +15,7 @@ export default (_client: Client, guild: Guild) => {
   const serverObj: ServerObj = {};
   data[guild.id] = serverObj;
 
-  //write updated file
+  // write updated file
   try {
     fs.writeFileSync(dataFilePath, JSON.stringify(data));
     console.log(`Updated ${dataFilePath}`);
