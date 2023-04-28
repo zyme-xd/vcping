@@ -14,12 +14,12 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
 
   // designed to prevent double pings
   if (usersInVc > 1) {
-    console.log("Timer has not started, as one is already ongoing for this channel.");
+    console.log("[Discord] Timer has not started, as one is already ongoing for this channel.");
   } else {
     bot.createMessage(vcChannel, `Waiting 1 minute to ping. <@${member.id}>`);
     await delay(60000);
     updateVcUserCount()
-    if (usersInVc > 0) {
+    if (usersInVc !== 0) {
       bot.createMessage(vcChannel, "A call has started! <@&1091919355262025781>");
     } else{
       console.log("[Discord] Timer initiator no longer present, ping not sent.")
