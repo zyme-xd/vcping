@@ -1,7 +1,7 @@
 import { Client, Guild } from "eris";
-import * as fs from "fs";
 import { ServerObj } from "../structures/dataJson";
 import * as path from "path";
+import * as fs from "fs";
 
 // create default function
 export default (_client: Client, guild: Guild) => {
