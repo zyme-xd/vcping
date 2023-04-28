@@ -1,10 +1,28 @@
 import Eris from "eris";
 import fs from "fs";
 import * as dotenv from "dotenv";
+import * as path from "path";
+
 dotenv.config();
 let token: string = process.env.TOKEN;
 const bot = new Eris.Client(token);
 let commandlist: Map<any, any> = new Map(); // initializes map that stores commands
+const dataFilePath: string = path.join(__dirname, "./", "data.json");
+
+// check if the data file exists
+const fileExists: boolean = fs.existsSync(dataFilePath);
+
+// if the file does not exist, create it
+if (!fileExists) {
+  // create an empty JSON object and write it to the file
+  const initialData = {};
+  try {
+    fs.writeFileSync(dataFilePath, JSON.stringify(initialData));
+    console.log(`Created ${dataFilePath}`);
+  } catch (err) {
+    console.error(`Error creating ${dataFilePath}: ${err}`);
+  }
+}
 
 // command handler - reads and imports all command files in the /commands directory
 for (let file of fs.readdirSync(`${__dirname}/commands`)) {
