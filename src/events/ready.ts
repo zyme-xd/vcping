@@ -26,6 +26,5 @@ export default (client: Client) => {
         console.error(`Error updating ${dataFilePath}: ${err}`);
       }
     }
-    console.log(guild.id);
   });
 };
