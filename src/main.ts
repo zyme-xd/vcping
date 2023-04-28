@@ -2,11 +2,11 @@ import Eris from "eris";
 import fs from "fs";
 import * as dotenv from "dotenv";
 import * as path from "path";
-
 dotenv.config();
+
 let token: string = process.env.TOKEN;
-const bot = new Eris.Client(token);
 let commandlist: Map<any, any> = new Map(); // initializes map that stores commands
+const bot = new Eris.Client(token);
 const dataFilePath: string = path.join(__dirname, "./", "data.json");
 
 // check if the data file exists
