@@ -13,4 +13,5 @@ npm run start    # run the bot!
 - [x]  Create structure for "database" entry to reference when needed.
 - [ ]  Implement ``setrole`` command 
 - [ ]  Implement ``setdelay`` command 
-- [x] When added to a server, create a vc role and set a default delay (would remove need for check during`` voiceChannelJoin ``event)
+- [x]  When added to a server, create a vc role and set a default delay (would remove need for check during`` voiceChannelJoin ``event)
+- [ ]  Add ability for servers to have different designated ping roles for different voice channels.
