@@ -2,7 +2,7 @@ import { Client, CommandInteraction } from "eris";
 
 export const info = {
   name: "setrole",
-  description: "Set the role VcPing notifies for your server.",
+  description: "Set the role Vc Ping notifies for your server.",
   disabled: false,
   options: [{ name: "roleid", description: "The role ID.", type: 3, required: true }],
 };

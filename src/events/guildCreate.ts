@@ -5,7 +5,6 @@ import * as fs from "fs";
 
 // create default function
 export default async (client: Client, guild: Guild) => {
-  console.log(guild.id);
   const dataFilePath: string = path.join(__dirname, "..", "data.json");
 
   // parse the contents of the data file into a JSON object
