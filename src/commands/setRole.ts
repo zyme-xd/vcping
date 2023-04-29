@@ -22,13 +22,11 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   }
 
   // if a valid role ID is provided, continue as normal
-  if (roleId) {
-    const checkedValue = parseInt(roleId);
-    if (Number.isNaN(checkedValue) || !roles?.has(roleId)) {
-      await interaction.createFollowup(`Invalid input.`);
-      return;
-    }
-
-    await interaction.createFollowup(`Unimplemented. ${checkedValue}`);
+  const checkedValue = parseInt(roleId!);
+  if (Number.isNaN(checkedValue) || !roles?.has(roleId!)) {
+    await interaction.createFollowup(`Invalid input.`);
+    return;
   }
+
+  await interaction.createFollowup(`Unimplemented. ${checkedValue}`);
 }
