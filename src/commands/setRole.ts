@@ -7,37 +7,24 @@ export const info = {
   options: [{ name: "roleid", description: "The role ID.", type: 3, required: true }],
 };
 
-// THIS IS THE WORST THING EVER
-function isRoleOption(option: any): option is { value: string } {
-  return option && typeof option.value === "string";
-}
-
-// This language is odd
-function getRoleValue(optionsData: any): string | null {
-  if (Array.isArray(optionsData) && optionsData.length > 0 && isRoleOption(optionsData[0])) {
-    return optionsData[0].value.toString();
-  } else {
-    return null;
-  }
-}
-
 export async function run(client: Client, interaction: CommandInteraction): Promise<void> {
   const optionsData = interaction.data.options;
-  const isAdmin = interaction.member?.permissions.has("administrator");
-  const roleId = getRoleValue(optionsData);
-  const roles = client.guilds?.get(`${interaction.guildID}`)?.roles;
+  const isAdmin = interaction.member?.permissions.has("administrator"); // admin check
+  const roleId = optionsData?.[0]?.type === 3 ? optionsData?.[0].value : null; // get roleid from optionsdata through narrowing
+  const roles = client.guilds?.get(`${interaction.guildID}`)?.roles; // get server roles (used to validate roleid entered)
 
   await interaction.acknowledge(64);
 
+  // if user is not an administrator, send an error message and return
   if (!isAdmin) {
     await interaction.createFollowup("You do not have permission to run this command!!");
     return;
   }
 
+  // if a valid role ID is provided, continue as normal
   if (roleId) {
-    let checkedValue = parseInt(roleId);
+    const checkedValue = parseInt(roleId);
     if (Number.isNaN(checkedValue) || !roles?.has(roleId)) {
-      // checks if input is a valid number and if it actually exists
       await interaction.createFollowup(`Invalid input.`);
       return;
     }
