@@ -5,6 +5,7 @@ function isRoleOption(option: any): option is { value: string } {
   return option && typeof option.value === "string";
 }
 
+// This language is odd
 function getRoleValue(optionsData: any): string | null {
   if (Array.isArray(optionsData) && optionsData.length > 0 && isRoleOption(optionsData[0])) {
     return optionsData[0].value.toString();
@@ -40,6 +41,7 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
       await interaction.createFollowup(`Invalid input.`);
       return;
     }
+
     await interaction.createFollowup(`Unimplemented. ${checkedValue}`);
   }
 }
