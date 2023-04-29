@@ -1,5 +1,12 @@
 import { Client, CommandInteraction } from "eris";
 
+export const info = {
+  name: "setrole",
+  description: "Set the role VcPing notifies for your server.",
+  disabled: false,
+  options: [{ name: "roleid", description: "The role ID.", type: 3, required: true }],
+};
+
 // THIS IS THE WORST THING EVER
 function isRoleOption(option: any): option is { value: string } {
   return option && typeof option.value === "string";
@@ -13,13 +20,6 @@ function getRoleValue(optionsData: any): string | null {
     return null;
   }
 }
-
-export const info = {
-  name: "setrole",
-  description: "Set the role VcPing notifies for your server.",
-  disabled: false,
-  options: [{ name: "roleid", description: "The role ID.", type: 3, required: true }],
-};
 
 export async function run(client: Client, interaction: CommandInteraction): Promise<void> {
   const optionsData = interaction.data.options;
