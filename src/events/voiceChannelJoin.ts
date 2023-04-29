@@ -24,12 +24,11 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   if (usersInVc > 1) {
     console.log("[Discord] Timer has not started, as one is not needed.");
   } else {
-    bot.createMessage(vcChannel, `Waiting 1 minute to ping. <@${member.id}>`);
+    bot.createMessage(vcChannel, `Waiting 2 minutes to ping. <@${member.id}>`);
     await delay(guildData.delay);
     updateVcUserCount();
 
     if (usersInVc !== 0) {
-      console.log(guildData.roleId)
       bot.createMessage(vcChannel, `A call has started! <@&${guildData.roleId}>`);
     } else {
       console.log("[Discord] Timer initiator no longer present, ping not sent.");

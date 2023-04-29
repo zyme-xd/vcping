@@ -18,8 +18,8 @@ export default async (client: Client, guild: Guild) => {
   // write updated file
   try {
     fs.writeFileSync(dataFilePath, JSON.stringify(data));
-    console.log(`Updated ${dataFilePath}`);
+    console.log(`[Database] Updated ${dataFilePath}`);
   } catch (err) {
-    console.error(`Error updating ${dataFilePath}: ${err}`);
+    console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
   }
 };

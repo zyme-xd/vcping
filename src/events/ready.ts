@@ -12,7 +12,7 @@ export default (client: Client) => {
 
   client.guilds.forEach(async function (guild) {
     if (data.hasOwnProperty(guild.id)) {
-      console.log("[Discord] Entry already exists, skip over.");
+      console.log("[Database] Entry already exists, skip over.");
     } else {
       // create an empty server object for this guild and add it to the data object
       const roleIdentifier = await client.createRole(guild.id, { name: "Server VC Ping" });
@@ -22,9 +22,9 @@ export default (client: Client) => {
       // write updated file
       try {
         fs.writeFileSync(dataFilePath, JSON.stringify(data));
-        console.log(`Updated ${dataFilePath}`);
+        console.log(`[Database] Updated ${dataFilePath}`);
       } catch (err) {
-        console.error(`Error updating ${dataFilePath}: ${err}`);
+        console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
       }
     }
   });
