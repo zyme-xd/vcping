@@ -1,5 +1,5 @@
 export interface ServerObj {
-    roleId?: number;
-    delay?: number;
+    roleId: string;
+    delay: number;
   }
   

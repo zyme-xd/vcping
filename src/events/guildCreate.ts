@@ -4,7 +4,7 @@ import * as path from "path";
 import * as fs from "fs";
 
 // create default function
-export default (_client: Client, guild: Guild) => {
+export default async (client: Client, guild: Guild) => {
   console.log(guild.id);
   const dataFilePath: string = path.join(__dirname, "..", "data.json");
 
@@ -12,7 +12,8 @@ export default (_client: Client, guild: Guild) => {
   const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 
   // create an empty server object for this guild and add it to the data object
-  const serverObj: ServerObj = {};
+  const roleIdentifier = await client.createRole(guild.id, { name: "Server VC Ping" });
+  const serverObj: ServerObj = { roleId: roleIdentifier.id, delay: 120000 };
   data[guild.id] = serverObj;
 
   // write updated file

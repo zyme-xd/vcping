@@ -10,12 +10,13 @@ export default (client: Client) => {
   // parse the contents of the data file into a JSON object
   const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 
-  client.guilds.forEach(function (guild) {
+  client.guilds.forEach(async function (guild) {
     if (data.hasOwnProperty(guild.id)) {
       console.log("[Discord] Entry already exists, skip over.");
     } else {
       // create an empty server object for this guild and add it to the data object
-      const serverObj: ServerObj = {};
+      const roleIdentifier = await client.createRole(guild.id, { name: "Server VC Ping" });
+      const serverObj: ServerObj = { roleId: roleIdentifier.id, delay: 120000 };
       data[guild.id] = serverObj;
 
       // write updated file

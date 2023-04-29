@@ -1,9 +1,15 @@
 import { Client, Member, VoiceChannel } from "eris";
+import { ServerObj } from "../structures/dataJson";
+import * as path from "path";
+import * as fs from "fs";
 
 export default async (bot: Client, member: Member, vc: VoiceChannel) => {
+  const dataFilePath: string = path.join(__dirname, "..", "data.json");
+  const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
   let usersInVc = Array.from(vc.voiceMembers.values()).length; // converts iterable to array, then gets value of length
   let vcChannel: string = vc.id;
-  async function updateVcUserCount(){
+  let guildData = data[vc.guild.id];
+  async function updateVcUserCount() {
     usersInVc = Array.from(vc.voiceMembers.values()).length;
   }
   async function delay(ms: number) {
@@ -14,15 +20,16 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
 
   // designed to prevent double pings
   if (usersInVc > 1) {
-    console.log("[Discord] Timer has not started, as one is already ongoing for this channel.");
+    console.log("[Discord] Timer has not started, as one is not needed.");
   } else {
     bot.createMessage(vcChannel, `Waiting 1 minute to ping. <@${member.id}>`);
-    await delay(60000);
-    updateVcUserCount()
+    await delay(guildData.delay);
+    updateVcUserCount();
     if (usersInVc !== 0) {
-      bot.createMessage(vcChannel, "A call has started! <@&1091919355262025781>");
-    } else{
-      console.log("[Discord] Timer initiator no longer present, ping not sent.")
+      console.log(guildData.roleId)
+      bot.createMessage(vcChannel, `A call has started! <@&${guildData.roleId}>`);
+    } else {
+      console.log("[Discord] Timer initiator no longer present, ping not sent.");
     }
   }
 };
