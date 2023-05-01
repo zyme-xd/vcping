@@ -1,4 +1,7 @@
 import { Client, CommandInteraction } from "eris";
+import { ServerObj } from "../structures/dataJson";
+import * as path from "path";
+import * as fs from "fs";
 
 export const info = {
   name: "setrole",
@@ -12,6 +15,10 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   const isAdmin = interaction.member?.permissions.has("administrator"); // admin check
   const roleId = optionsData?.[0]?.type === 3 ? optionsData?.[0].value : null; // get roleid from optionsdata through narrowing
   const roles = client.guilds?.get(`${interaction.guildID}`)?.roles; // get server roles (used to validate roleid entered)
+  const server: string = interaction.guildID as string;
+  const dataFilePath: string = path.join(__dirname, "..", "data.json");
+  let data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+
 
   await interaction.acknowledge(64);
 
@@ -27,6 +34,15 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
     await interaction.createFollowup(`Invalid input.`);
     return;
   }
+  data[server].roleId = checkedValue.toString();
 
-  await interaction.createFollowup(`Unimplemented. ${checkedValue}`);
+  // write updated file
+  try {
+    fs.writeFileSync(dataFilePath, JSON.stringify(data));
+    console.log(`[Database] Updated ${dataFilePath}`);
+  } catch (err) {
+    console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
+  }
+  
+  await interaction.createFollowup(`Set role to <@&${checkedValue}>.`);
 }
