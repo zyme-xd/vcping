@@ -27,24 +27,27 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
     return;
   }
 
+  // checks if an input is actually received
+  // idk if could be done more effectively, might change this out eventually (if discord api allows)
   if (!optionsData?.length) {
     await interaction.createFollowup("No input received.");
     return;
   }
 
+  // calculate sum of options
   let delaySum: number = optionsData.reduce((sum: number, arg): number => {
     if (arg.type === 4) {
       arg.value;
       if (arg.name == "minutes") {
-        sum += arg.value * 60000; // convert minutes in milliseconds
+        sum += arg.value * 60000; // convert minutes into milliseconds
       } else if (arg.name == "seconds") {
-        sum += arg.value * 1000;
+        sum += arg.value * 1000; // convert seconds into milliseconds
       }
     }
     return sum;
   }, 0);
 
-  data[server].delay = delaySum;
+  data[server].delay = delaySum; // set server delay as sum
 
   // write updated file
   try {
