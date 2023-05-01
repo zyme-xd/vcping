@@ -8,7 +8,7 @@ export default async (client: Client, guild: Guild) => {
   const dataFilePath: string = path.join(__dirname, "..", "data.json");
 
   // parse the contents of the data file into a JSON object
-  const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+  let data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 
   // create an empty server object for this guild and add it to the data object
   const roleIdentifier = await client.createRole(guild.id, { name: "Server VC Ping" });

@@ -8,7 +8,7 @@ export default (client: Client) => {
   const dataFilePath: string = path.join(__dirname, "..", "data.json");
 
   // parse the contents of the data file into a JSON object
-  const data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+  let data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 
   client.guilds.forEach(async function (guild) {
     if (data.hasOwnProperty(guild.id)) {
