@@ -44,15 +44,15 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
   }, 0);
 
   // if delay is not set to the value given
-  if(delaySum !== jsonData[server].delay){
+  if (delaySum !== jsonData[server].delay) {
     jsonData[server].delay = delaySum; // set server delay as sum
-  } else{
-    await interaction.createFollowup("The delay is already set to this value.") // avoid writing if unneeded
-    return
+  } else {
+    await interaction.createFollowup("The delay is already set to this value."); // avoid writing if unneeded
+    return;
   }
 
   // write updated file
-  updateDb(jsonData)
+  updateDb(jsonData);
 
   await interaction.createMessage(`Delay time has been updated.`);
 }

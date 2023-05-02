@@ -15,8 +15,6 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   const roles = client.guilds?.get(`${interaction.guildID}`)?.roles; // get server roles (used to validate roleid entered)
   const server: string = interaction.guildID as string;
 
-
-
   await interaction.acknowledge(64);
 
   // if user is not an administrator, send an error message and return
@@ -32,16 +30,15 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   }
 
   // if roleid is not set to the value given
-  if(roleId! !== jsonData[server].roleId){
-    jsonData[server].roleId = roleId! // set role
-  }else{
-    await interaction.createFollowup("The role is already set to this value.") // avoid writing if unneeded
-    return
+  if (roleId! !== jsonData[server].roleId) {
+    jsonData[server].roleId = roleId!; // set role
+  } else {
+    await interaction.createFollowup("The role is already set to this value."); // avoid writing if unneeded
+    return;
   }
-  
 
   // write updated file
-  updateDb(jsonData)
-  
+  updateDb(jsonData);
+
   await interaction.createFollowup(`Set role to <@&${jsonData[server].roleId.toString()}>.`);
 }

@@ -10,7 +10,6 @@ export default (client: Client) => {
       const roleIdentifier = await client.createRole(guild.id, { name: "Server VC Ping" });
       const serverObj: ServerObj = { roleId: roleIdentifier.id, delay: 120000 };
       jsonData[guild.id] = serverObj;
-
       // write updated file
       updateDb(jsonData);
     }
