@@ -1,7 +1,5 @@
 import { Client, CommandInteraction } from "eris";
-import { ServerObj } from "../structures/dataJson";
-import * as path from "path";
-import * as fs from "fs";
+import { jsonData, updateDb } from "../util/database";
 
 export const info = {
   name: "setrole",
@@ -16,8 +14,7 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   const roleId = optionsData?.[0]?.type === 3 ? optionsData?.[0].value : null; // get roleid from optionsdata through narrowing
   const roles = client.guilds?.get(`${interaction.guildID}`)?.roles; // get server roles (used to validate roleid entered)
   const server: string = interaction.guildID as string;
-  const dataFilePath: string = path.join(__dirname, "..", "data.json");
-  let data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+
 
 
   await interaction.acknowledge(64);
@@ -35,8 +32,8 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   }
 
   // if roleid is not set to the value given
-  if(roleId! !== data[server].roleId){
-    data[server].roleId = roleId! // set role
+  if(roleId! !== jsonData[server].roleId){
+    jsonData[server].roleId = roleId! // set role
   }else{
     await interaction.createFollowup("The role is already set to this value.") // avoid writing if unneeded
     return
@@ -44,11 +41,7 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   
 
   // write updated file
-  try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data));
-    console.log(`[Database] Updated ${dataFilePath}`);
-  } catch (err) {
-    console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
-  }
-  await interaction.createFollowup(`Set role to <@&${data[server].roleId.toString()}>.`);
+  updateDb(jsonData)
+  
+  await interaction.createFollowup(`Set role to <@&${jsonData[server].roleId.toString()}>.`);
 }

@@ -1,7 +1,5 @@
 import { Client, CommandInteraction } from "eris";
-import { ServerObj } from "../structures/dataJson";
-import * as path from "path";
-import * as fs from "fs";
+import { jsonData, updateDb } from "../util/database";
 
 export const info = {
   name: "setdelay",
@@ -17,8 +15,6 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
   const isAdmin = interaction.member?.permissions.has("administrator");
   const optionsData = interaction.data.options;
   const server: string = interaction.guildID as string;
-  const dataFilePath: string = path.join(__dirname, "..", "data.json");
-  let data: { [key: string]: ServerObj } = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
 
   await interaction.acknowledge(64);
 
@@ -48,20 +44,15 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
   }, 0);
 
   // if delay is not set to the value given
-  if(delaySum !== data[server].delay){
-    data[server].delay = delaySum; // set server delay as sum
+  if(delaySum !== jsonData[server].delay){
+    jsonData[server].delay = delaySum; // set server delay as sum
   } else{
     await interaction.createFollowup("The delay is already set to this value.") // avoid writing if unneeded
     return
   }
 
   // write updated file
-  try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data));
-    console.log(`[Database] Updated ${dataFilePath}`);
-  } catch (err) {
-    console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
-  }
+  updateDb(jsonData)
 
   await interaction.createMessage(`Delay time has been updated.`);
 }
