@@ -46,8 +46,12 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
     }
     return sum;
   }, 0);
-
-  data[server].delay = delaySum; // set server delay as sum
+  if(delaySum !== data[server].delay){
+    data[server].delay = delaySum; // set server delay as sum
+  } else{
+    await interaction.createFollowup("The delay is already set to this value.")
+    return
+  }
 
   // write updated file
   try {
