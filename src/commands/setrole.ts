@@ -39,6 +39,5 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
 
   // write updated file
   updateDb(jsonData);
-
   await interaction.createFollowup(`Set role to <@&${jsonData[server].roleId.toString()}>.`);
 }

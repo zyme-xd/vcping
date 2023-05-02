@@ -53,6 +53,5 @@ export async function run(_client: Client, interaction: CommandInteraction): Pro
 
   // write updated file
   updateDb(jsonData);
-
   await interaction.createMessage(`Delay time has been updated.`);
 }
