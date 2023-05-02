@@ -34,10 +34,11 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
     return;
   }
 
+  // if roleid is not set to the value given
   if(roleId! !== data[server].roleId){
-    data[server].roleId = roleId!
+    data[server].roleId = roleId! // set role
   }else{
-    await interaction.createFollowup("The role is already set to this value.")
+    await interaction.createFollowup("The role is already set to this value.") // avoid writing if unneeded
     return
   }
   
