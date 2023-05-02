@@ -32,9 +32,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   }
 
   // designed to prevent unneeded pings
-  if (usersInVc > 1) {
-    console.log("[Discord] Timer has not started, as one is not needed.");
-  } else {
+  if (usersInVc <= 1) { {
     bot.createMessage(vcChannel, `Waiting ${msToTime(guildData.delay)} to ping. <@${member.id}>`);
     await delay(guildData.delay);
     updateVcUserCount();
@@ -44,4 +42,4 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
       console.log("[Discord] Timer initiator no longer present, ping not sent.");
     }
   }
-};
+}}
