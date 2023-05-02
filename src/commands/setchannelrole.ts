@@ -35,18 +35,25 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
 
   // check if both `roleId` and `channelId` are strings
   if (typeof roleId === "string" && typeof channelId === "string") {
-    // create a new object that represents the channel role
-    const channelRole = {
-      voiceChannel: channelId, 
-      role: roleId, 
-    };
-    // check if `jsonData[server].channelRoles` exists and is an array
-    if (jsonData[server].channelRoles && Array.isArray(jsonData[server].channelRoles)) {
-      // if it is an array, push the new `channelRole` object onto it
-      jsonData[server].channelRoles?.push(channelRole);
+    // find the channel role in the `channelRoles` array that matches the `channelId`
+    const existingChannelRole = jsonData[server]?.channelRoles?.find((channelRole) => channelRole.voiceChannel === channelId);
+
+    // if the `existingChannelRole` already exists, update its `role` property instead of creating a new entry
+    if (existingChannelRole) {
+      existingChannelRole.role = roleId;
     } else {
-      // if it doesn't exist or isn't an array, create a new array with the `channelRole` object
-      jsonData[server].channelRoles = [channelRole];
+      // otherwise, create a new channel role object
+      const channelRole = {
+        voiceChannel: channelId,
+        role: roleId,
+      };
+
+      // check if `jsonData[server].channelRoles` exists and is an array
+      if (jsonData[server].channelRoles && Array.isArray(jsonData[server].channelRoles)) {
+        jsonData[server].channelRoles?.push(channelRole);
+      } else {
+        jsonData[server].channelRoles = [channelRole];
+      }
     }
   }
 
