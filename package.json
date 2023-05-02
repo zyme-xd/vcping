@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node .\\dist\\main.js "
+    "start": "node ./dist/main.js"
   },
   "devDependencies": {
     "@types/eris-sharder": "^1.10.1",
