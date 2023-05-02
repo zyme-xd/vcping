@@ -2,6 +2,7 @@ import { Client, Member, VoiceChannel } from "eris";
 import { ServerObj } from "../structures/dataJson";
 import * as path from "path";
 import * as fs from "fs";
+import { msToTime } from "../util/timeConv";
 
 export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   const dataFilePath: string = path.join(__dirname, "..", "data.json");
@@ -24,7 +25,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   if (usersInVc > 1) {
     console.log("[Discord] Timer has not started, as one is not needed.");
   } else {
-    bot.createMessage(vcChannel, `Waiting 2 minutes to ping. <@${member.id}>`);
+    bot.createMessage(vcChannel, `Waiting ${msToTime(guildData.delay)} to ping. <@${member.id}>`);
     await delay(guildData.delay);
     updateVcUserCount();
 

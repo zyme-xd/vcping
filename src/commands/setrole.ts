@@ -29,12 +29,12 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   }
 
   // if a valid role ID is provided, continue as normal
-  const checkedValue = parseInt(roleId!);
-  if (Number.isNaN(checkedValue) || !roles?.has(roleId!)) {
-    await interaction.createFollowup(`Invalid input.`);
+  if (Number.isNaN(roleId!) || !roles?.has(roleId!)) {
+    await interaction.createFollowup(`Invalid input. If you mentioned a role, copy the ID instead of mentioning it.`);
     return;
   }
-  data[server].roleId = checkedValue.toString();
+
+  data[server].roleId = roleId!
 
   // write updated file
   try {
@@ -43,6 +43,5 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
   } catch (err) {
     console.error(`[Database] Error updating ${dataFilePath}: ${err}`);
   }
-  
-  await interaction.createFollowup(`Set role to <@&${checkedValue}>.`);
+  await interaction.createFollowup(`Set role to <@&${data[server].roleId.toString()}>.`);
 }
