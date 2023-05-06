@@ -15,7 +15,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
     await new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  console.log(`[Discord] ${member.id} has joined the channel ${vc.id} in the server ${vc.guild.id}`);
+  console.log(`[VC] ${member.id} has joined the channel ${vc.id} in the server ${vc.guild.id}`);
 
   // check if the voice channel belongs to a channel role
   const matchingChannelRole = guildData.channelRoles?.find((channelRole) => channelRole.voiceChannel === vcChannel);
@@ -28,13 +28,14 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   // designed to prevent unneeded pings
   if (usersInVc <= 1) {
     {
-      bot.createMessage(vcChannel, `Waiting ${msToTime(guildData.delay)} to ping. <@${member.id}>`);
+      bot.createMessage(vcChannel, `Waiting ${msToTime(guildData.delay)} to ping.`);
+      console.log(`[VC] ${member.id} started timer in the channel ${vc.id} in the server ${vc.guild.id}`);
       await delay(guildData.delay);
       updateVcUserCount();
       if (usersInVc !== 0) {
         bot.createMessage(vcChannel, `A call has started! <@&${guildData.roleId}>`);
       } else {
-        console.log("[Discord] Timer initiator no longer present, ping not sent.");
+        console.log("[VC] Timer initiator no longer present, ping not sent.");
       }
     }
   }
