@@ -7,7 +7,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   let vcChannel: string = vc.id;
   let guildData = jsonData[vc.guild.id];
   let activeTimers: string[] = [];
-  
+
   async function updateVcUserCount() {
     usersInVc = Array.from(vc.voiceMembers.values()).length;
   }
