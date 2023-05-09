@@ -1,12 +1,11 @@
 import { Client, Member, VoiceChannel } from "eris";
 import { msToTime } from "../util/timeConv";
 import { jsonData } from "../util/database";
-
+let activeTimers: string[] = [];
 export default async (bot: Client, member: Member, vc: VoiceChannel) => {
   let usersInVc = Array.from(vc.voiceMembers.values()).length; // converts iterable to array, then gets value of length
   let vcChannel: string = vc.id;
   let guildData = jsonData[vc.guild.id];
-  let activeTimers: string[] = [];
 
   async function updateVcUserCount() {
     usersInVc = Array.from(vc.voiceMembers.values()).length;
@@ -36,7 +35,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
       `[VC] ${member.id} started timer in the channel ${vc.id} in the server ${vc.guild.id}`
     );
     await delay(guildData.delay);
-    activeTimers.filter((timer) => !timer.includes(vcChannel));
+    activeTimers = activeTimers.filter((timer) => !timer.includes(vcChannel));
     updateVcUserCount();
     if (usersInVc !== 0) {
       bot.createMessage(vcChannel, `A call has started! <@&${guildData.roleId}>`);
