@@ -29,14 +29,18 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
 
   // if a valid role ID is provided, continue as normal
   if (Number.isNaN(roleId!) || !roles?.has(roleId!)) {
-    await interaction.createFollowup("Invalid input. If you mentioned a role, copy the ID instead of mentioning it.");
+    await interaction.createFollowup(
+      "Invalid input. If you mentioned a role, copy the ID instead of mentioning it."
+    );
     return;
   }
 
   // check if both `roleId` and `channelId` are strings
-  if (typeof roleId === "string" && typeof channelId === "string") {
+  if (typeof roleId === "string" && typeof channelId === "string" ) {
     // find the channel role in the `channelRoles` array that matches the `channelId`
-    const existingChannelRole = jsonData[server]?.channelRoles?.find((channelRole) => channelRole.voiceChannel === channelId);
+    const existingChannelRole = jsonData[server]?.channelRoles?.find(
+      (channelRole) => channelRole.voiceChannel === channelId
+    );
 
     // if the `existingChannelRole` already exists, update its `role` property instead of creating a new entry
     if (existingChannelRole) {
@@ -56,8 +60,10 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
       }
     }
   }
-  
+
   // write updated file
   updateDb(jsonData);
-  await interaction.createFollowup(`Set to ping <@&${roleId}> when a vc starts in <#${channelId}>.`);
+  await interaction.createFollowup(
+    `Set to ping <@&${roleId}> when a vc starts in <#${channelId}>.`
+  );
 }

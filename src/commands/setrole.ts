@@ -25,7 +25,9 @@ export async function run(client: Client, interaction: CommandInteraction): Prom
 
   // if a valid role ID is provided, continue as normal
   if (Number.isNaN(roleId!) || !roles?.has(roleId!)) {
-    await interaction.createFollowup("Invalid input. If you mentioned a role, copy the ID instead of mentioning it.");
+    await interaction.createFollowup(
+      "Invalid input. If you mentioned a role, copy the ID instead of mentioning it."
+    );
     return;
   }
 

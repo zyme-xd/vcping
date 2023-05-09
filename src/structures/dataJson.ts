@@ -1,4 +1,4 @@
-export interface ServerObj {
+export interface serverObj {
   roleId: string;
   delay: number;
   channelRoles?: {
