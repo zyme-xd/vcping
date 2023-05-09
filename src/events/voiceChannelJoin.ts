@@ -35,7 +35,7 @@ export default async (bot: Client, member: Member, vc: VoiceChannel) => {
       `[VC] ${member.id} started timer in the channel ${vc.id} in the server ${vc.guild.id}`
     );
     await delay(guildData.delay);
-    activeTimers = activeTimers.filter((timer) => !timer.includes(vcChannel));
+    activeTimers.filter((timer) => !timer.includes(vcChannel));
     updateVcUserCount();
     if (usersInVc !== 0) {
       bot.createMessage(vcChannel, `A call has started! <@&${guildData.roleId}>`);
